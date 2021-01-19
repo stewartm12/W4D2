@@ -6,7 +6,7 @@ class Employee
     @title = title
     @salary = salary
     @boss = boss
-    @boss.employees << self 
+    @boss.employees << self unless @boss.nil?
   end
 
   def bonus(multiplier)
@@ -16,8 +16,8 @@ end
 
 
 
-class Manager
-  extend Employee
+class Managere < Employee
+  attr_reader :employees
 
   def initialize(name, title, salary, boss)
     super(name, title, salary, boss)
@@ -31,7 +31,7 @@ class Manager
       employee = queue.shift
       sub_salary += employee.salary
 
-      queue += employee.employees unless employee.employees.nil?
+      queue += employee.employees if employee.is_a?(Managere)
     end
 
     sub_salary * multiplier
