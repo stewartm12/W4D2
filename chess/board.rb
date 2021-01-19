@@ -19,13 +19,13 @@ class Board
 
   def move_piece(start_pos, end_pos)
     raise "No piece at that position" if self[start_pos] == nil
-    raise "Piece cannot be moved to that position" unless valid_move?(start_pos, end_pos) 
+    raise "Piece cannot be moved to that position" unless valid_pos?(start_pos, end_pos) 
 
     self[start_pos], self[end_pos] = nil, self[start_pos]
     self[end_pos].pos = end_pos
   end
 
-  def valid_move?(start_pos, end_pos)
+  def valid_pos?(start_pos, end_pos)
     x, y = end_pos
     return x.between?(0, 7) && y.between?(0,7)
   end
