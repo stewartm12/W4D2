@@ -1,18 +1,23 @@
 require_relative "piece"
+require_relative "king"
+require_relative "knight"
+require_relative "nullpiece"
+
 
 class Board
 
   def initialize
-    @board = Array.new(8) { Array.new(8, nil) }
+    null = NullPiece.instance
+    @board = Array.new(8) { Array.new(8, null) }
     (0..1).each do |x|
       (0..7).each do |y|
-        @board[x][y] = Piece.new(:black, @board, [x, y])
+        @board[x][y] = King.new(:black, @board, [x, y])
       end
     end
 
     (6..7).each do |x|
       (0..7).each do |y|
-        @board[x][y] = Piece.new(:white, @board, [x, y])
+        @board[x][y] = Knight.new(:white, @board, [x, y])
       end
     end
   end

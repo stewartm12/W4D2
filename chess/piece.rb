@@ -8,8 +8,8 @@ class Piece
     @pos = pos
   end
 
-  def to.s
-
+  def to_s
+    symbol
   end
 
   def empty?
@@ -24,7 +24,7 @@ class Piece
     self.pos = val
   end
 
-  def Symbol
+  def symbol
 
   end
 
