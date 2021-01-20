@@ -17,7 +17,9 @@ class Piece
   end
 
   def valid_moves
-
+    valid = []
+    moves.each { |pos| valid << pos unless move_into_check?(pos) }
+    valid 
   end
 
   def pos=(val)
@@ -30,6 +32,9 @@ class Piece
 
   private 
   def move_into_check?(end_pos)
-
+    new_board = board.dup
+    new_board.move_piece(pos, end_pos)
+    return true if new_board.in_check?(color)
+    false 
   end
 end

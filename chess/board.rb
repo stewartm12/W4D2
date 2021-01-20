@@ -5,10 +5,10 @@ require_relative "chesspieces"
 class Board
   attr_reader :rows
 
-  def initialize(fill_board? = true)
+  def initialize(fill_board = true)
     @null = NullPiece.instance
     @rows = Array.new(8) { Array.new(8, null) }
-    if fill_board?
+    if fill_board
       color = :black
       [1, 6].each do |row|
         (0..7).each do |col|
@@ -31,6 +31,7 @@ class Board
   def move_piece(start_pos, end_pos)
     raise "No piece at that position" if self[start_pos] == null
     raise "Piece cannot be moved to that position" unless self[start_pos].moves.include?(end_pos) 
+    raise "That move will leave you in check" if self[start_pos].valid_moves.include?(end_pos)
 
     # old_piece = self[end_pos]
     self[start_pos], self[end_pos] = null, self[start_pos]
@@ -93,7 +94,9 @@ class Board
           new_board[[row,col]] = self[[row,col]]
           new_board[[row,col]].board = new_board
         end
-      end
+    end
+
+    new_board
   end
   private
   attr_reader :null 
