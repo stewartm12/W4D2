@@ -4,9 +4,9 @@ require_relative "stepable"
 class Knight < Piece
 
   include Stepable
-  
+
   def symbol 
-    :N
+    color == :white ? "♘" : "♞"
   end
 
   protected
