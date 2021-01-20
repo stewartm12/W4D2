@@ -5,24 +5,26 @@ require_relative "chesspieces"
 class Board
   attr_reader :rows
 
-  def initialize
+  def initialize(fill_board? = true)
     @null = NullPiece.instance
     @rows = Array.new(8) { Array.new(8, null) }
-    color = :black
-    [1, 6].each do |row|
-      (0..7).each do |col|
-        @rows[row][col] = Pawn.new(color, self, [row, col])
+    if fill_board?
+      color = :black
+      [1, 6].each do |row|
+        (0..7).each do |col|
+          @rows[row][col] = Pawn.new(color, self, [row, col])
+        end
+        color = :white
       end
-      color = :white
-    end
 
-    color = :black
-    pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
-    [0, 7].each do |row|
-      (0..7).each do |col|
-        @rows[row][col] = pieces[col].new(color, self, [row, col])
+      color = :black
+      pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+      [0, 7].each do |row|
+        (0..7).each do |col|
+          @rows[row][col] = pieces[col].new(color, self, [row, col])
+        end
+        color = :white
       end
-      color = :white
     end
   end
 
@@ -84,6 +86,15 @@ class Board
     true
   end
 
+  def dup
+    new_board = Board.new(false)
+    (0..7).each do |row|
+        (0..7).each do |col|
+          new_board[[row,col]] = self[[row,col]]
+          new_board[[row,col]].board = new_board
+        end
+      end
+  end
   private
   attr_reader :null 
 end
