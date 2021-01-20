@@ -6,24 +6,30 @@ class Board
   def initialize
     null = NullPiece.instance
     @rows = Array.new(8) { Array.new(8, null) }
-    (0..1).each do |x|
-      (0..7).each do |y|
-        @rows[x][y] = Pawn.new(:black, self, [x, y])
+    color = :black
+    [1, 6].each do |row|
+      (0..7).each do |col|
+        @rows[row][col] = Pawn.new(color, self, [row, col])
       end
+      color = :white
     end
 
-    (6..7).each do |x|
-      (0..7).each do |y|
-        @rows[x][y] = Queen.new(:white, self, [x, y])
+    color = :black
+    pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+    [0, 7].each do |row|
+      (0..7).each do |col|
+        @rows[row][col] = pieces[col].new(color, self, [row, col])
       end
+      color = :white
     end
   end
 
   def move_piece(start_pos, end_pos)
-    raise "No piece at that position" if self[start_pos] == nil
-    raise "Piece cannot be moved to that position" unless valid_pos?(start_pos, end_pos) 
+    raise "No piece at that position" if self[start_pos] == NullPiece.instance
+    raise "Piece cannot be moved to that position" unless self[start_pos].moves.include?(end_pos) 
 
-    self[start_pos], self[end_pos] = nil, self[start_pos]
+    # old_piece = self[end_pos]
+    self[start_pos], self[end_pos] = NullPiece.instance, self[start_pos]
     self[end_pos].pos = end_pos
   end
 
