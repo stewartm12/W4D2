@@ -9,4 +9,8 @@ class NullPiece < Piece
     @board = nil
     @pos = []
   end
+
+  def symbol
+    " "
+  end
 end
