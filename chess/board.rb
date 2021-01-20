@@ -31,7 +31,17 @@ class Board
   def move_piece(start_pos, end_pos)
     raise "No piece at that position" if self[start_pos] == null
     raise "Piece cannot be moved to that position" unless self[start_pos].moves.include?(end_pos) 
-    raise "That move will leave you in check" if self[start_pos].valid_moves.include?(end_pos)
+    raise "That move will leave you in check" unless self[start_pos].valid_moves.include?(end_pos)
+
+    # old_piece = self[end_pos]
+    self[start_pos], self[end_pos] = null, self[start_pos]
+    self[end_pos].pos = end_pos
+  end
+
+def move_piece!(start_pos, end_pos)
+    # raise "No piece at that position" if self[start_pos] == null
+    # raise "Piece cannot be moved to that position" unless self[start_pos].moves.include?(end_pos) 
+    # raise "That move will leave you in check" if self[start_pos].valid_moves.include?(end_pos)
 
     # old_piece = self[end_pos]
     self[start_pos], self[end_pos] = null, self[start_pos]
