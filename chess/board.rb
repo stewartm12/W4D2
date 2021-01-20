@@ -50,6 +50,39 @@ class Board
     @rows[x][y] = value
   end
 
+  def in_check?(color)
+    king_pos = nil 
+    (0..7).each do |row|
+      (0..7).each do |col|
+        if self[[row, col]].is_a?(King) && self[[row, col]].color == color
+          king_pos = [row, col]
+          break
+        end
+      end
+      break unless king_pos == nil
+    end
+
+    (0..7).each do |row|
+      (0..7).each do |col|
+        next if self[[row, col]] == null || self[[row, col]].color == color 
+        return true if self[[row, col]].moves.include?(king_pos)
+      end
+    end
+
+    false 
+  end
+
+  def checkmate?(color)
+    (0..7).each do |row|
+      (0..7).each do |col|
+        next unless self[[row, col]].color == color 
+        return false if self[[row, col]].valid_moves
+      end
+    end
+
+    true
+  end
+
   private
   attr_reader :null 
 end

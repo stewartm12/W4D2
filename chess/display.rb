@@ -50,3 +50,7 @@ class Display
         end
     end 
 end
+
+b = Board.new
+d = Display.new(b)
+d.test
