@@ -9,7 +9,10 @@ class Pawn < Piece
   end
 
   def moves
-
+    valid = []
+    valid += forward_steps
+    valid += side_attacks
+    valid
   end
 
   private
@@ -25,14 +28,23 @@ class Pawn < Piece
   end
 
   def forward_steps
-    return [[1, 0], [2, 0]] if at_start_row
-    [[1, 0]]
+    valid = []
+    new_pos = [pos[0]+1, pos[1]]
+    valid << new_pos if board.valid_pos?(new_pos) && board[new_pos].color == :none
+    if at_start_row?
+        new_pos = [pos[0]+2, pos[1]]
+        valid << new_pos if board.valid_pos?(new_pos) && board[new_pos].color == :none
+    end
+    valid
   end
 
   def side_attacks
     valid = []
-    valid << [1, 1] if board[[pos[0] + 1, pos[1] + 1]].color != color
-    valid << [1, -1] if board[[pos[0] + 1, pos[1] - 1]].color != color
+    opposing_color = (color == :white ? :black : :white)
+    new_pos = [pos[0]+1, pos[1]+1]
+    valid << new_pos if board.valid_pos?(new_pos) && board[new_pos].color == opposing_color
+    new_pos = [pos[0]+1, pos[1]-1]
+    valid << new_pos if board.valid_pos?(new_pos) && board[new_pos].color == opposing_color
     valid
   end
 

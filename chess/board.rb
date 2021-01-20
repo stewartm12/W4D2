@@ -8,7 +8,7 @@ class Board
     @rows = Array.new(8) { Array.new(8, null) }
     (0..1).each do |x|
       (0..7).each do |y|
-        @rows[x][y] = King.new(:black, self, [x, y])
+        @rows[x][y] = Pawn.new(:black, self, [x, y])
       end
     end
 
