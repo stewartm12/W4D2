@@ -1,23 +1,20 @@
-require_relative "piece"
-require_relative "king"
-require_relative "knight"
-require_relative "nullpiece"
+require_relative "chesspieces"
 
 
 class Board
 
   def initialize
     null = NullPiece.instance
-    @board = Array.new(8) { Array.new(8, null) }
+    @rows = Array.new(8) { Array.new(8, null) }
     (0..1).each do |x|
       (0..7).each do |y|
-        @board[x][y] = King.new(:black, @board, [x, y])
+        @rows[x][y] = King.new(:black, self, [x, y])
       end
     end
 
     (6..7).each do |x|
       (0..7).each do |y|
-        @board[x][y] = Knight.new(:white, @board, [x, y])
+        @rows[x][y] = Queen.new(:white, self, [x, y])
       end
     end
   end
@@ -30,19 +27,19 @@ class Board
     self[end_pos].pos = end_pos
   end
 
-  def valid_pos?(start_pos, end_pos)
-    x, y = end_pos
+  def valid_pos?(pos)
+    x, y = pos
     return x.between?(0, 7) && y.between?(0,7)
   end
 
 
   def [](pos)
     x, y = pos
-    @board[x][y]
+    @rows[x][y]
   end
 
   def []=(pos, value)
     x, y = pos
-    @board[x][y] = value
+    @rows[x][y] = value
   end
 end

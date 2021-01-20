@@ -1,21 +1,30 @@
+require "byebug"
+
 module Slideable
 
   HORIZONTAL_DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1]]
   DIAGONAL_DIRS = [[1, 1], [1, -1], [-1, 1], [-1, -1]]
 
-
   def horizontal_dirs
+    HORIZONTAL_DIRS
+  end
+
+  def diagonal_dirs
+    DIAGONAL_DIRS
+  end
+
+  def get_horizontal_dirs
     valid = []
-    HORIZONTAL_DIRS.each do |dir|
+    horizontal_dirs.each do |dir|
       valid += grow_unblocked_moves_in_dir(dir[0], dir[1])
     end
 
     valid 
   end
 
-  def diagonal_dirs 
+  def get_diagonal_dirs 
     valid = []
-    DIAGONAL_DIRS.each do |dir|
+    diagonal_dirs.each do |dir|
       valid += grow_unblocked_moves_in_dir(dir[0], dir[1])
     end
 
@@ -26,13 +35,8 @@ module Slideable
     valid = []
 
     dir = move_dirs
-    if dir == :horizontal || dir == :both
-      valid += horizontal_dirs 
-    end
-    if dir == :diagonal || dir == :both
-      valid += diagonal_dirs
-    end
-    
+    valid += get_horizontal_dirs unless dir == :diagonal
+    valid += get_diagonal_dirs unless dir == :horizontal
     valid
   end
 
@@ -47,15 +51,15 @@ module Slideable
     while true 
       row += dx 
       col += dy
-
-      break if !row.between?(0, 7) && !col.between?(0, 7)
-      break if board[row][col].color == color
-
+    
+      break unless board.valid_pos?([row,col])
+      break if board[[row,col]].color == color
 
       valid << [row , col]
 
-      break if board[row][col].color != :none
+      break if board[[row,col]].color != :none
     end
+    valid
   end
 
 end
