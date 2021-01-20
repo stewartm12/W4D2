@@ -1,3 +1,4 @@
+require "byebug"
 require "colorize"
 require_relative "board"
 require_relative "cursor"
@@ -12,22 +13,34 @@ class Display
     end
 
     def render
-        board[cursor.cursor_pos].symbol.colorize( :background => :red)
+        system("clear")
+        # board[cursor.cursor_pos].symbol.colorize( :background => :red)
         (0..7).each do |row|
             print_row(row)
         end
     end
 
+    def test
+
+        while true
+            render
+            cursor.get_input
+        end
+        
+    end
+
+
     private
 
     def print_row(row)
+        # debugger
         row_to_print = ""
         if row == cursor.cursor_pos[0]
             (0..7).each do |col|
                 if col == cursor.cursor_pos[1]
-                    row_to_print += board.rows[col].symbol.colorize( :background => :red)
+                    row_to_print += board[[row, col]].symbol.colorize( :background => :red)
                 else 
-                    row_to_print += board.rows[col] 
+                    row_to_print += board[[row, col]].symbol 
                 end
                 row_to_print += " " unless col == 7
             end
