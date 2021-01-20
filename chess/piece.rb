@@ -1,6 +1,5 @@
 class Piece
-  attr_reader :color, :board 
-  attr_accessor :pos
+  attr_reader :color, :board, :pos 
 
   def initialize(color, board, pos)
     @color = color
@@ -21,7 +20,7 @@ class Piece
   end
 
   def pos=(val)
-    self.pos = val
+    @pos = val
   end
 
   def symbol
