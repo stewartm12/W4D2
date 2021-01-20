@@ -29,10 +29,10 @@ class Pawn < Piece
 
   def forward_steps
     valid = []
-    new_pos = [pos[0]+1, pos[1]]
+    new_pos = [pos[0]+forward_dir, pos[1]]
     valid << new_pos if board.valid_pos?(new_pos) && board[new_pos].color == :none
     if at_start_row?
-        new_pos = [pos[0]+2, pos[1]]
+        new_pos = [pos[0]+2*forward_dir, pos[1]]
         valid << new_pos if board.valid_pos?(new_pos) && board[new_pos].color == :none
     end
     valid
@@ -41,9 +41,9 @@ class Pawn < Piece
   def side_attacks
     valid = []
     opposing_color = (color == :white ? :black : :white)
-    new_pos = [pos[0]+1, pos[1]+1]
+    new_pos = [pos[0]+forward_dir, pos[1]+1]
     valid << new_pos if board.valid_pos?(new_pos) && board[new_pos].color == opposing_color
-    new_pos = [pos[0]+1, pos[1]-1]
+    new_pos = [pos[0]+forward_dir, pos[1]-1]
     valid << new_pos if board.valid_pos?(new_pos) && board[new_pos].color == opposing_color
     valid
   end

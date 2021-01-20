@@ -23,7 +23,17 @@ class Display
     def test
 
         while true
+            render; sleep(1)
+            board.move_piece([6,5], [5,5])
+            render; sleep(1)
+            board.move_piece([1, 4], [3,4])
+            render; sleep(1)
+            board.move_piece([6,6], [4,6])
             render
+            p board.in_check?(:white); sleep(1)
+            board.move_piece([0,3], [4,7])
+            render; sleep(1)
+            p board.in_check?(:white)
             cursor.get_input
         end
         
@@ -33,7 +43,6 @@ class Display
     private
 
     def print_row(row)
-        # debugger
         row_to_print = ""
         if row == cursor.cursor_pos[0]
             (0..7).each do |col|
