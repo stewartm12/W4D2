@@ -48,9 +48,9 @@ class Display
             (0..7).each do |col|
                 bg_color = bg_color_values[(row+col)%2]
                 if row == cursor.cursor_pos[0] && col == cursor.cursor_pos[1]
-                    row_to_print += board[[row, col]].symbol.colorize( :background => :red)
+                    row_to_print += board[[row, col]].to_s.colorize( :background => :red)
                 else 
-                    row_to_print += board[[row, col]].symbol.colorize( :background => bg_color) 
+                    row_to_print += board[[row, col]].to_s.colorize( :background => bg_color) 
                 end
                 # row_to_print += " " unless col == 7
             end
