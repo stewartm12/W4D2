@@ -60,6 +60,6 @@ class Display
     end 
 end
 
-b = Board.new
-d = Display.new(b)
-d.test
+# b = Board.new
+# d = Display.new(b)
+# d.test

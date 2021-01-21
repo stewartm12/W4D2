@@ -89,7 +89,8 @@ class Cursor
 
   def update_pos(diff)
     new_pos = [cursor_pos[0] + diff[0], cursor_pos[1] + diff[1]]
-    raise "Cursor off the Board!" unless board.valid_pos?(new_pos)
-    @cursor_pos = new_pos 
+    #Leave cursor at current position if new direction would take it off the board
+    @cursor_pos = new_pos if board.valid_pos?(new_pos)
+     
   end
 end
