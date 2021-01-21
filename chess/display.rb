@@ -14,7 +14,6 @@ class Display
 
     def render
         system("clear")
-        # board[cursor.cursor_pos].symbol.colorize( :background => :red)
         (0..7).each do |row|
             print_row(row)
         end
@@ -43,22 +42,26 @@ class Display
     private
 
     def print_row(row)
+        bg_color_values = { 0 => :light_blue, 1 => :light_black}
         row_to_print = ""
-        if row == cursor.cursor_pos[0]
+        # if row == cursor.cursor_pos[0]
             (0..7).each do |col|
-                if col == cursor.cursor_pos[1]
+                bg_color = bg_color_values[(row+col)%2]
+                if row == cursor.cursor_pos[0] && col == cursor.cursor_pos[1]
                     row_to_print += board[[row, col]].symbol.colorize( :background => :red)
                 else 
-                    row_to_print += board[[row, col]].symbol 
+                    row_to_print += board[[row, col]].symbol.colorize( :background => bg_color) 
                 end
-                row_to_print += " " unless col == 7
+                # row_to_print += " " unless col == 7
             end
             puts row_to_print 
-        else  
-            puts board.rows[row].join(" ")
-        end
+        # else  
+            # puts board.rows[row].join(" ")
+        # end
     end 
+
 end
+
 
 # b = Board.new
 # d = Display.new(b)

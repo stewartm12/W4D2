@@ -33,3 +33,6 @@ class Game
         attr_reader :display, :players
         attr_accessor :current_player
 end
+
+g= Game.new
+g.play
