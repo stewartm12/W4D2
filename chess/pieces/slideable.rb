@@ -48,7 +48,7 @@ module Slideable
     valid = []
     row, col = pos
 
-    while true 
+    loop do 
       row += dx 
       col += dy
     
